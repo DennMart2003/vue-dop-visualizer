@@ -12,5 +12,7 @@
   background: linear-gradient(to bottom, #1a1a1a, #0f0f0f);
   width: 100%;
   height: 100vh;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 </style>

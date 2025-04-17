@@ -322,17 +322,13 @@ watch(() => props.selectedDate, async (newDate) => {
 }
 
 .map-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90vw;
-    height: 80vh;
-    max-width: 1200px;
-    max-height: 800px;
-    border: 5px solid gray;
-    margin: 10px auto;
-    padding: 10px;
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
 }
 
 .loading-overlay {

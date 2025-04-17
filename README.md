@@ -154,10 +154,10 @@ The following software must be installed on your device to run ```vue-dop-visual
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Update Vue website to have more frontend components to look more styled
-- [ ] Convert Vue implementation from **Options API to -> Composition API**
-- [ ] Documentation on why we chose Leaflet library for visualization
-- [ ] Patch bugs on related to leaflet so that no errors show on frontend.
+- [X] Update Vue website to have more frontend components to look more styled
+- [X] Convert Vue implementation from **Options API to -> Composition API**
+- [X] Documentation on why we chose Leaflet library for visualization
+- [X] Patch bugs on related to leaflet so that no errors show on frontend.
 
 
 

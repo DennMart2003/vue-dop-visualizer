@@ -1,12 +1,12 @@
 <template>
   <Navbar />
   <div class="container mt-4">
-    <div class="row gx-4">
-      <div class="col-md-3">
+    <div class="row gx-4 gy-4">
+      <div class="col-lg-3 col-md-4 col-12 pe-5">
         <DatePicker @dateChanged="updateDate" />
       </div>
 
-      <div class="col-md-9">
+      <div class="col-lg-9 col-md-8 col-12">
         <LeafletComp :selectedDate="selectedDate" />
       </div>
     </div>
