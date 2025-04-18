@@ -318,7 +318,8 @@ watch(() => props.selectedDate, async (newDate) => {
     width: 100%;
     height: 100%;
     min-height: 500px;
-    background-color: black
+    background-color: black;
+    z-index: 0;
 }
 
 .map-container {
@@ -336,7 +337,7 @@ watch(() => props.selectedDate, async (newDate) => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 999;
+    z-index: 0;
     background: rgba(0, 0, 0, 0);
     padding: 20px;
     border-radius: 10px;
