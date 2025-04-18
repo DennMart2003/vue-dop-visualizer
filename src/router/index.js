@@ -1,12 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/components/HomePage.vue";
-import LeafletComp from "@/components/LeafletComp.vue";
-// eslint-disable-next-line
-import LeafletMap from "@/components/LeafletMap.vue";
+import About from "@/components/AboutSection.vue";
 
 const routes = [
   { path: "/", component: HomePage }, // Root path is homepage
-  { path: "/map", component: LeafletComp }, // /map client-side endpoint for working visualization with database
+  { path: "/about", component: About }, 
 ];
 
 const router = createRouter({

@@ -138,7 +138,7 @@ The following software must be installed on your device to run ```vue-dop-visual
 
 ## Usage
 
-- In order to display a visualization of DOP data, the application requires a backend. Currently you must populate the database manually for a selected date.
+- In order to display a visualization of DOP data, the application requires a backend. Currently on page load, it displays a visualization for the most recent time, rounded down to the nearest hour.
 - A date/time picker component
 
     ![Project Preview](images/date-picker-preview.png)
@@ -147,7 +147,7 @@ The following software must be installed on your device to run ```vue-dop-visual
 - With the database populated for the selected date, the application should display a world map visualization with DOP data overlaid as contours.
 
 
-![DOP Map Preview](images/dop-map-preview.png)
+![DOP Map Preview](images/dop-map-preview-v2.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
