@@ -1,5 +1,5 @@
 <template>
-    <div class="map-container">
+    <div class="map-container border border-light">
         <div v-if="loading" class="loading-overlay">
             <div class="spinner"></div>
             <p>{{ spinnerText }} {{ props.selectedDate }}...</p>
