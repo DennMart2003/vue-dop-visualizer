@@ -13,9 +13,9 @@
                         <div class="card-text">
                             <b>Satellite Visualizer</b> is a web application designed to visualize a GPS performance
                             metric known as Dilution of Precision (DOP).
-                            DOP is a geometric measure that reflects the accuracy of GPS satellte positioning. Lower
+                            DOP is a geometric measure that reflects the accuracy of GPS satellite positioning. Lower
                             DOP values indicate better positioning accuracy.
-                            Our tool helps explore how GPS precision varries across the globe at different points in
+                            Our tool helps explore how GPS precision varies across the globe at different points in
                             time.
                             <hr>    
                             The application allows users to:
