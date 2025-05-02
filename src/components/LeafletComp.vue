@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick, defineProps, toRaw } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch, nextTick, defineProps, toRaw } from 'vue';
 import L from 'leaflet';
 import 'leaflet-contour';
 import 'leaflet/dist/leaflet.css';
@@ -131,6 +131,11 @@ function getColor(value, min, max, colors) {
 }
 
 const initializeMap = () => {
+    const container = document.getElementById("mapid");
+    if (!container) {
+        console.log("Map container not found");
+        return;
+    }
     console.log(data.value);
     map.value = L.map("mapid", {
         worldCopyJump: true,
@@ -300,6 +305,10 @@ onMounted(async () => {
         loading.value = false;
     });
     console.log("Initialized map for: ", props.selectedDate);
+});
+
+onBeforeUnmount(() => {
+    deleteMap();
 });
 
 watch(() => props.selectedDate, async (newDate) => {
