@@ -337,7 +337,7 @@ watch(() => props.selectedDate, async (newDate) => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 0;
+    z-index: 999;
     background: rgba(0, 0, 0, 0);
     padding: 20px;
     border-radius: 10px;
