@@ -21,10 +21,14 @@ const props = defineProps(['selectedDate']);
 const map = ref(null);
 const spinnerText = ref(null);
 
+//min & max set beyond real coordinates to compensate for leaflet-contour limitation where surrounding null values are required
 const latMin = -91.44, latMax = 91.44;
 const lngMin = -181.44, lngMax = 181.44;
+
+//One DOP value for every 0.72 coordinate point
 const interval = 0.72;
 
+//color gradient for the contour plot
 const colors = ref([
     { color: "#00008f", point: 0 },
     { color: "#0000ef", point: 0.11111111111 },
@@ -38,16 +42,19 @@ const colors = ref([
     { color: "#7f0000", point: 1.0 },
 ]);
 
+//setting up 2D array where x = longitude, y = latitude, and z = dop value
 const data = ref({
     x: [], y: [], z: []
 });
 
+//navigates through the 2d array to assign z-values
 const getIndices = (lat, lng, latMax, lngMin, interval) => {
     const i = Math.round((latMax - lat) / interval);
     const j = Math.round((lng - lngMin) / interval);
     return { i, j };
 };
 
+//assigns longitude, latitude, and null values into x, y, and z respectively
 const generateData = () => {
     const numRows = Math.floor((latMax - latMin) / interval) + 1;
     const numCols = Math.floor((lngMax - lngMin) / interval) + 1;
@@ -73,6 +80,7 @@ const generateData = () => {
     }
 };
 
+//copied from leaflet-contour; mumbo jumbo about contour color calculation
 function getColor(value, min, max, colors) {
     function hex(c) {
         var s = "0123456789abcdef";
@@ -130,6 +138,7 @@ function getColor(value, min, max, colors) {
     }
 }
 
+//creates the Leaflet Map
 const initializeMap = () => {
     const container = document.getElementById("mapid");
     if (!container) {
@@ -152,7 +161,7 @@ const initializeMap = () => {
         tileSize: 512,
         zoomOffset: -1
     }).addTo(toRaw(map.value));
-
+    //creates outline of country borders on the world map
     fetch("/worldmap.json")
         .then(response => response.json())
         .then(data => {
@@ -168,6 +177,7 @@ const initializeMap = () => {
         });
 
     L.contour(data.value, {
+        //adjusts number of contours on the map; higher threshold, more contour layers
         thresholds: 10,
         style: (feature) => {
             return {
@@ -179,14 +189,14 @@ const initializeMap = () => {
         onEachFeature: onEachContour(),
     }).addTo(toRaw(map.value));
 
-
+    //Leaflet popup that should show the value (DOP) of a clicked contour
     function onEachContour() {
         return function (feature, layer) {
             // let roundedDOP = Math.round(feature.value);
             layer.bindPopup(`<table><tbody><tr><td>PDOP: ${feature.value}</td></tr></tbody></table>`);
         };
     }
-
+    //creates the color gradient legend
     const legend = L.control({ position: "bottomright" });
 
     legend.onAdd = function () {
@@ -211,22 +221,6 @@ const initializeMap = () => {
     legend.addTo(toRaw(map.value));
 };
 
-// const restartMap = () => {
-//     if (map.value) {
-//         map.value.stop();
-//         // map.value.eachLayer(layer => map.value.removeLayer(layer));
-//         // map.value.off();
-//         map.value.remove();
-//         map.value = null;
-//     }
-
-//     nextTick(() => {
-//         if (!map.value) {
-//             initializeMap();
-//         }
-//     });
-// };
-
 const deleteMap = () => {
     if (map.value) {
         map.value.remove();
@@ -241,7 +235,7 @@ const restartMap = () => {
     });
 };
 
-
+//fetches DOP data from InfluxDB and populates the 2D array with DOP data. 
 const fetchDataFromFastAPI = async () => {
     try {
         loading.value = true;
@@ -253,6 +247,7 @@ const fetchDataFromFastAPI = async () => {
 
         data.value.z.forEach(row => row.fill(null));
 
+        //populates the 2D array at the nearest whole hour rounded down.
         dopData.forEach(({ time, Latitude, Longitude, PDOP }) => {
             const lat = parseFloat(Latitude);
             const lng = parseFloat(Longitude);
@@ -267,6 +262,7 @@ const fetchDataFromFastAPI = async () => {
             if (timeDiff <= threshold) {
                 const { i, j } = getIndices(lat, lng, latMax, lngMin, interval);
 
+                //rounded down pdop values to replicate FAA visualizations.
                 if (i >= 0 && i < data.value.z.length && j >= 0 && j < data.value.z[i].length) {
                     data.value.z[i][j] = Math.floor(pdop);
                 }
